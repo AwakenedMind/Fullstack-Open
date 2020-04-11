@@ -26,7 +26,6 @@ const App = (props) => {
   return (
     <Fragment>
       <div>Largest Anecodote {props.anecdotes[findMostPoints(points)]}</div>
-
       <div>{props.anecdotes[selected]}</div>
       <p>{points[selected]}</p>
       <Button handleClick={handleReset} text='next anecdote' />
