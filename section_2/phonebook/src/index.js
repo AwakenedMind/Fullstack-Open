@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import ReactDOM from 'react-dom';
-
+import axios from 'axios'
 
 const Filter = ({filter, onChange}) => {
   return (
@@ -20,10 +20,7 @@ const Persons = ({persons}) => {
 }
 
 const App = () => {
-  const [ persons, setPersons] = useState([
-    { name: 'Rob', number: '123' },
-    { name: 'Sky', number: '456' }
-  ]) 
+  const [persons, setPersons] = useState([]) 
 
   // controlling the form input element.
   const [ newName, setNewName ] = useState('');
@@ -59,6 +56,14 @@ const App = () => {
 
   const result = () => personsToShow.map(person => <p key={person.name}>{person.name} {person.number}</p> )
   
+  useEffect(() => {
+    axios
+      .get('http://localhost:3001/persons').then(response => {
+        console.log(response)
+        setPersons(response.data)
+      })
+  }, [])
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -78,7 +83,7 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       <ul>
-        <Persons persons={result()} />
+        {/* <Persons persons={result()} /> */}
       </ul>
     </div>
   )
